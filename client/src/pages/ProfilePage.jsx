@@ -1,1 +1,6 @@
-const ProfilePage = () => <h1>Profil</h1>; export default ProfilePage;
+const ProfilePage = () => {
+    return <h1>Mon Profil</h1>;
+  };
+  
+  export default ProfilePage;
+  

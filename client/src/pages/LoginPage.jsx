@@ -1,1 +1,6 @@
-const LoginPage = () => <h1>Connexion</h1>; export default LoginPage;
+const LoginPage = () => {
+    return <h1>Connexion</h1>;
+  };
+  
+  export default LoginPage;
+  

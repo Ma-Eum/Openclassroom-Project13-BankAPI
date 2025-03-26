@@ -1,1 +1,6 @@
-const HomePage = () => <h1>Accueil</h1>; export default HomePage;
+const HomePage = () => {
+    return <h1>Bienvenue sur Argent Bank</h1>;
+  };
+  
+  export default HomePage;
+  
