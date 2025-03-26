@@ -1,12 +1,14 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../redux/userSlice'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Header = () => {
-  const isAuthenticated = useSelector((state) => state.user.isAuthenticated)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated)
+  const userInfo = useSelector((state) => state.user.userInfo)
 
   const handleLogout = () => {
     dispatch(logout())
@@ -14,14 +16,19 @@ const Header = () => {
   }
 
   return (
-    <nav>
-      <Link to="/">Argent Bank</Link>
-      {isAuthenticated ? (
-        <button onClick={handleLogout}>Se déconnecter</button>
-      ) : (
-        <Link to="/login">Connexion</Link>
-      )}
-    </nav>
+    <header>
+      <nav>
+        <Link to="/">Argent Bank</Link>
+        {isAuthenticated ? (
+          <>
+            <span>👤 {userInfo?.firstName || 'Utilisateur'}</span>
+            <button onClick={handleLogout}>Se déconnecter</button>
+          </>
+        ) : (
+          <Link to="/login">Se connecter</Link>
+        )}
+      </nav>
+    </header>
   )
 }
 
