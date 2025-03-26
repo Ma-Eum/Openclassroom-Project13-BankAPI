@@ -3,59 +3,73 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { loginSuccess } from '../redux/userSlice'
 
+// Composant page de connexion
 const LoginPage = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch() // Permet d'envoyer des actions Redux
+  const navigate = useNavigate() // Permet de rediriger vers une autre route
+
+  // États locaux pour stocker les champs du formulaire
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState(null)
+  const [error, setError] = useState('')
 
+  // Gestionnaire de soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setError(null)
 
     try {
+      // Requête POST vers l’API de login
       const response = await fetch('http://localhost:3001/api/v1/user/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ email, password }),
       })
 
       const data = await response.json()
 
-      if (data.status === 200) {
+      // Si login réussi, on stocke le token et redirige vers /profile
+      if (data.body?.token) {
         dispatch(loginSuccess({ token: data.body.token }))
         navigate('/profile')
       } else {
-        setError('Email ou mot de passe incorrect.')
+        setError(data.message || 'Échec de la connexion')
       }
     } catch (err) {
-      setError('Une erreur est survenue.')
-      console.error(err)
+      console.error(err) // Pour le debug
+      setError('Erreur de connexion au serveur.')
     }
   }
 
   return (
-    <div>
+    <div className="login-page">
       <h1>Connexion</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        /><br />
-        <input
-          type="password"
-          placeholder="Mot de passe"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        /><br />
+        <label>
+          Email :
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </label>
+
+        <label>
+          Mot de passe :
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </label>
+
         <button type="submit">Se connecter</button>
+
+        {error && <p className="error">{error}</p>}
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
     </div>
   )
 }
