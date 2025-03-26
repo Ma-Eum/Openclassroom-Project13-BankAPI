@@ -1,7 +1,7 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import LoginPage from "./pages/LoginPage";
-import ProfilePage from "./pages/ProfilePage";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import HomePage from './pages/HomePage'
+import LoginPage from './pages/LoginPage'
+import ProfilePage from './pages/ProfilePage'
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
