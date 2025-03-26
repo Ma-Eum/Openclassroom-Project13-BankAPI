@@ -1,14 +1,13 @@
+// src/components/Header.jsx
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { logout } from '../redux/userSlice'
 import { Link, useNavigate } from 'react-router-dom'
+import { logout } from '../redux/userSlice'
 
-const Header = () => {
+function Header() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const isAuthenticated = useSelector((state) => state.user.isAuthenticated)
-  const userInfo = useSelector((state) => state.user.userInfo)
+  const { isAuthenticated, userInfo } = useSelector((state) => state.user)
 
   const handleLogout = () => {
     dispatch(logout())
@@ -16,19 +15,33 @@ const Header = () => {
   }
 
   return (
-    <header>
-      <nav>
-        <Link to="/">Argent Bank</Link>
+    <nav className="main-nav">
+      <Link className="main-nav-logo" to="/">
+        <img
+          className="main-nav-logo-image"
+          src="/img/argentBankLogo.png"
+          alt="Argent Bank Logo"
+        />
+        <h1 className="sr-only">Argent Bank</h1>
+      </Link>
+
+      <div>
         {isAuthenticated ? (
           <>
-            <span>👤 {userInfo?.firstName || 'Utilisateur'}</span>
-            <button onClick={handleLogout}>Se déconnecter</button>
+            <Link className="main-nav-item" to="/profile">
+              <i className="fa fa-user-circle"></i> {userInfo?.firstName}
+            </Link>
+            <button className="main-nav-item" onClick={handleLogout}>
+              <i className="fa fa-sign-out"></i> Sign Out
+            </button>
           </>
         ) : (
-          <Link to="/login">Se connecter</Link>
+          <Link className="main-nav-item" to="/login">
+            <i className="fa fa-user-circle"></i> Sign In
+          </Link>
         )}
-      </nav>
-    </header>
+      </div>
+    </nav>
   )
 }
 
