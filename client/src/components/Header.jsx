@@ -26,20 +26,20 @@ function Header() {
       </Link>
 
       <div>
-        {isAuthenticated ? (
-          <>
-            <Link className="main-nav-item" to="/profile">
-              <i className="fa fa-user-circle"></i> {userInfo?.firstName}
-            </Link>
-            <button className="main-nav-item" onClick={handleLogout}>
-              <i className="fa fa-sign-out"></i> Sign Out
-            </button>
-          </>
-        ) : (
-          <Link className="main-nav-item" to="/login">
-            <i className="fa fa-user-circle"></i> Sign In
+      {isAuthenticated ? (
+        <>
+          <Link className="main-nav-item" to="/profile">
+            <i className="fa fa-user-circle"></i> {userInfo?.firstName}
           </Link>
-        )}
+          <a href="#" className="main-nav-item" onClick={(e) => { e.preventDefault(); handleLogout(); }}>
+            <i className="fa fa-sign-out"></i> Sign Out
+          </a>
+        </>
+      ) : (
+        <Link className="main-nav-item" to="/login">
+          <i className="fa fa-user-circle"></i> Sign In
+        </Link>
+      )}
       </div>
     </nav>
   )
