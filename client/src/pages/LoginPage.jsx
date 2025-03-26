@@ -1,12 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-const LoginPage = () => {
-  return (
-    <main>
-      <h1>Connexion</h1>
-      <p>Formulaire de connexion ici prochainement</p>
-    </main>
-  );
-};
+function LoginPage() {
+  return <h1>Connexion à votre compte</h1>
+}
 
-export default LoginPage;
+export default LoginPage
