@@ -29,8 +29,8 @@ const ProfilePage = () => {
         if (data.status === 200) {
           dispatch(setUserInfo(data.body))
         }
-      } catch (err) {
-        console.error('Erreur lors de la récupération du profil :', err)
+      } catch (error) {
+        console.error('Erreur lors de la récupération du profil :', error)
       }
     }
 
@@ -81,64 +81,62 @@ const ProfilePage = () => {
   }
 
   return (
-    <main className="main bg-dark">
-      <div className="header">
+    <main className="main bg-dark" aria-label="User profile">
+      <header className="header" role="banner">
         {!isEditing ? (
           <>
             <h1>
-              Welcome back
-              <br />
-              {userInfo ? (
-                <>
-                  {userInfo.firstName} {userInfo.lastName}!
-                </>
-              ) : (
-                '...'
-              )}
+              Welcome back<br />
+              {userInfo ? `${userInfo.firstName} ${userInfo.lastName}!` : '...'}
             </h1>
-            <button className="edit-button" onClick={handleEditClick}>
-              Edit Name
-            </button>
+            <button className="edit-button" onClick={handleEditClick} aria-label="Edit name">Edit Name</button>
           </>
         ) : (
-          <div className="edit-form">
-            <h1>Edit User Info</h1>
+          <form className="edit-form" onSubmit={(e) => { e.preventDefault(); handleSave() }} aria-labelledby="edit-title">
+            <h1 id="edit-title">Edit User Info</h1>
             <div className="input-wrapper">
+              <label htmlFor="first-name">First Name</label>
               <input
+                id="first-name"
                 type="text"
                 value={firstNameInput}
                 onChange={(e) => setFirstNameInput(e.target.value)}
+                required
               />
             </div>
             <div className="input-wrapper">
+              <label htmlFor="last-name">Last Name</label>
               <input
+                id="last-name"
                 type="text"
                 value={lastNameInput}
                 onChange={(e) => setLastNameInput(e.target.value)}
+                required
               />
             </div>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
+            {error && (
+              <p role="alert" aria-live="assertive" style={{ color: 'red' }}>
+                {error}
+              </p>
+            )}
             <div>
-              <button className="edit-button" onClick={handleSave}>
-                Save
-              </button>
-              <button className="edit-button" onClick={handleCancel}>
-                Cancel
-              </button>
+              <button className="edit-button" type="submit">Save</button>
+              <button className="edit-button" type="button" onClick={handleCancel}>Cancel</button>
             </div>
-          </div>
+          </form>
         )}
-      </div>
+      </header>
 
-      {/* Comptes bancaires */}
-      {accounts.map((account, index) => (
-        <AccountCard
-          key={index}
-          title={account.title}
-          amount={account.amount}
-          description={account.description}
-        />
-      ))}
+      <section aria-label="Accounts">
+        {accounts.map((account, index) => (
+          <AccountCard
+            key={index}
+            title={account.title}
+            amount={account.amount}
+            description={account.description}
+          />
+        ))}
+      </section>
     </main>
   )
 }
