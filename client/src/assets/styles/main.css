@@ -276,6 +276,24 @@ body {
   color: #fff;
 }
 
+.user-link,
+.logout-link {
+  font-weight: bold;
+  color: #2c3e50;
+  margin-left: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.logout-link:hover,
+.user-link:hover {
+  text-decoration: underline;
+}
+
+.fa {
+  margin-right: 5px;
+}
+
 @media (min-width: 720px) {
   .account {
     flex-direction: row;

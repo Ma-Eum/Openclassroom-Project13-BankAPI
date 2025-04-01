@@ -1,4 +1,3 @@
-// src/pages/HomePage.jsx
 import React from 'react'
 
 const HomePage = () => {
@@ -20,7 +19,7 @@ const HomePage = () => {
         <h2 className="sr-only">Features</h2>
         <div className="feature-item">
           <img
-            src="/img/icon-chat.png"
+            src="src/assets/img/icon-chat.png"
             alt="Chat Icon"
             className="feature-icon"
           />
@@ -32,7 +31,7 @@ const HomePage = () => {
         </div>
         <div className="feature-item">
           <img
-            src="/img/icon-money.png"
+            src="src/assets/img/icon-money.png"
             alt="Money Icon"
             className="feature-icon"
           />
@@ -43,7 +42,7 @@ const HomePage = () => {
         </div>
         <div className="feature-item">
           <img
-            src="/img/icon-security.png"
+            src="src/assets/img/icon-security.png"
             alt="Security Icon"
             className="feature-icon"
           />
