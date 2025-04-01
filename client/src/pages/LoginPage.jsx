@@ -32,8 +32,12 @@ const LoginPage = () => {
   }
 
   return (
-    <main className="main bg-dark">
-      <section className="sign-in-content" aria-labelledby="signin-title">
+    <main className="main bg-dark" aria-label="Login page">
+      <section
+        className="sign-in-content"
+        aria-labelledby="signin-title"
+        role="form"
+      >
         <i className="fa fa-user-circle sign-in-icon" aria-hidden="true"></i>
         <h1 id="signin-title">Sign In</h1>
         <form onSubmit={handleSubmit}>
@@ -68,7 +72,11 @@ const LoginPage = () => {
             <label htmlFor="remember-me">Remember me</label>
           </div>
           <button className="sign-in-button" type="submit">Sign In</button>
-          {error && <p role="alert" style={{ color: 'red' }}>{error}</p>}
+          {error && (
+            <p role="alert" aria-live="assertive" style={{ color: 'red' }}>
+              {error}
+            </p>
+          )}
         </form>
       </section>
     </main>
