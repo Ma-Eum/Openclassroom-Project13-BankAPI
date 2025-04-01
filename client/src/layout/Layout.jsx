@@ -1,12 +1,16 @@
+// src/layout/Layout.jsx
 import React from 'react'
-import Header from './Header'
-import Footer from './Footer'
+import Header from '../components/Header'
+import Footer from '../components/Footer'
+import { Outlet } from 'react-router-dom'
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
     <>
       <Header />
-      <main className="main">{children}</main>
+      <main className="main bg-dark">
+        <Outlet />
+      </main>
       <Footer />
     </>
   )
