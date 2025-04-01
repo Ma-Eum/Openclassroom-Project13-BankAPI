@@ -29,8 +29,8 @@ const ProfilePage = () => {
         if (data.status === 200) {
           dispatch(setUserInfo(data.body))
         }
-      } catch (error) {
-        console.error('Erreur lors de la récupération du profil :', error)
+      } catch (err) {
+        console.error('Erreur lors de la récupération du profil :', err)
       }
     }
 
@@ -82,18 +82,32 @@ const ProfilePage = () => {
 
   return (
     <main className="main bg-dark" aria-label="User profile">
-      <header className="header" role="banner">
+      <section className="header" role="banner">
         {!isEditing ? (
           <>
             <h1>
-              Welcome back<br />
+              Welcome back
+              <br />
               {userInfo ? `${userInfo.firstName} ${userInfo.lastName}!` : '...'}
             </h1>
-            <button className="edit-button" onClick={handleEditClick} aria-label="Edit name">Edit Name</button>
+            <button
+              className="edit-button"
+              onClick={handleEditClick}
+              aria-label="Edit your name"
+            >
+              Edit Name
+            </button>
           </>
         ) : (
-          <form className="edit-form" onSubmit={(e) => { e.preventDefault(); handleSave() }} aria-labelledby="edit-title">
-            <h1 id="edit-title">Edit User Info</h1>
+          <form
+            className="edit-form"
+            onSubmit={(e) => {
+              e.preventDefault()
+              handleSave()
+            }}
+            aria-labelledby="edit-title"
+          >
+            <h2 id="edit-title">Edit your name</h2>
             <div className="input-wrapper">
               <label htmlFor="first-name">First Name</label>
               <input
@@ -120,14 +134,14 @@ const ProfilePage = () => {
               </p>
             )}
             <div>
-              <button className="edit-button" type="submit">Save</button>
-              <button className="edit-button" type="button" onClick={handleCancel}>Cancel</button>
+              <button type="submit" className="edit-button">Save</button>
+              <button type="button" className="edit-button" onClick={handleCancel}>Cancel</button>
             </div>
           </form>
         )}
-      </header>
+      </section>
 
-      <section aria-label="Accounts">
+      <section aria-label="Account summaries">
         {accounts.map((account, index) => (
           <AccountCard
             key={index}
