@@ -1,5 +1,4 @@
 import React from 'react'
-import Header from '../components/Header'
 import UserInfoEditor from '../components/UserInfoEditor'
 
 /**
@@ -8,7 +7,6 @@ import UserInfoEditor from '../components/UserInfoEditor'
 function ProfilePage() {
   return (
     <>
-      <Header />
       <main className="main bg-dark">
         <UserInfoEditor />
 
