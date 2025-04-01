@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { loginSuccess } from '../redux/userSlice'
 import { useNavigate } from 'react-router-dom'
-import Layout from '../layout/Layout'
 
 const LoginPage = () => {
   const dispatch = useDispatch()
@@ -36,44 +35,42 @@ const LoginPage = () => {
   }
 
   return (
-    <Layout>
-      <main className="main bg-dark">
-        <section className="sign-in-content">
-          <i className="fa fa-user-circle sign-in-icon"></i>
-          <h1>Sign In</h1>
-          <form onSubmit={handleSubmit}>
-            <div className="input-wrapper">
-              <label htmlFor="email">Username</label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="input-wrapper">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <div className="input-remember">
-              <input type="checkbox" id="remember-me" />
-              <label htmlFor="remember-me">Remember me</label>
-            </div>
-            <button className="sign-in-button" type="submit">
-              Sign In
-            </button>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-          </form>
-        </section>
-      </main>
-    </Layout>
+    <main className="main bg-dark">
+      <section className="sign-in-content">
+        <i className="fa fa-user-circle sign-in-icon"></i>
+        <h1>Sign In</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="input-wrapper">
+            <label htmlFor="email">Username</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-wrapper">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className="input-remember">
+            <input type="checkbox" id="remember-me" />
+            <label htmlFor="remember-me">Remember me</label>
+          </div>
+          <button className="sign-in-button" type="submit">
+            Sign In
+          </button>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+        </form>
+      </section>
+    </main>
   )
 }
 
