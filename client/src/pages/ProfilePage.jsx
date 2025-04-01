@@ -1,44 +1,69 @@
-import React from 'react'
-import UserInfoEditor from '../components/UserInfoEditor'
+// src/pages/ProfilePage.jsx
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { setUserInfo } from '../redux/userSlice'
+import accounts from '../mocks/mockAccounts'
 
 const ProfilePage = () => {
+  const dispatch = useDispatch()
+  const token = useSelector((state) => state.user.token)
+  const userInfo = useSelector((state) => state.user.userInfo)
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const response = await fetch('http://localhost:3001/api/v1/user/profile', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        })
+
+        const data = await response.json()
+        if (data.status === 200) {
+          dispatch(setUserInfo(data.body))
+        }
+      } catch (err) {
+        console.error('Erreur lors de la récupération du profil :', err)
+      }
+    }
+
+    if (token && !userInfo) {
+      fetchUserInfo()
+    }
+  }, [token, userInfo, dispatch])
+
   return (
     <main className="main bg-dark">
-      <UserInfoEditor />
+      <div className="header">
+        <h1>
+          Welcome back
+          <br />
+          {userInfo ? (
+            <>
+              {userInfo.firstName} {userInfo.lastName} !
+            </>
+          ) : (
+            '...'
+          )}
+        </h1>
+        <button className="edit-button">Edit Name</button>
+      </div>
 
-      {/* 🏦 Exemple de comptes mockés (tu peux les rendre dynamiques après) */}
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Checking (x8349)</h3>
-          <p className="account-amount">$2,082.79</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Savings (x6712)</h3>
-          <p className="account-amount">$10,928.42</p>
-          <p className="account-amount-description">Available Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
-
-      <section className="account">
-        <div className="account-content-wrapper">
-          <h3 className="account-title">Argent Bank Credit Card (x8349)</h3>
-          <p className="account-amount">$184.30</p>
-          <p className="account-amount-description">Current Balance</p>
-        </div>
-        <div className="account-content-wrapper cta">
-          <button className="transaction-button">View transactions</button>
-        </div>
-      </section>
+      {/* Section comptes bancaires mockées */}
+      {accounts.map((account, index) => (
+        <section key={index} className="account">
+          <div className="account-content-wrapper">
+            <h3 className="account-title">{account.title}</h3>
+            <p className="account-amount">{account.amount}</p>
+            <p className="account-amount-description">{account.description}</p>
+          </div>
+          <div className="account-content-wrapper cta">
+            <button className="transaction-button">View transactions</button>
+          </div>
+        </section>
+      ))}
     </main>
   )
 }
