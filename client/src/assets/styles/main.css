@@ -70,6 +70,45 @@ body {
   width: 200px;
 }
 
+main.main {
+  padding: 3rem 1rem; /* Ajoute de l'espace intérieur (haut/bas/gauche/droite) */
+}
+
+.edit-form {
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  color: #2c3e50;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.edit-form h1 {
+  margin-bottom: 1.5rem;
+  color: #12002b;
+  font-size: 1.5rem;
+}
+
+.edit-form .input-wrapper {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.edit-form input {
+  width: 100%;
+  padding: 10px;
+  font-size: 1.1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.edit-form button {
+  margin-top: 1rem;
+  margin-right: 10px;
+  padding: 10px 20px;
+}
+
 .hero {
   background-image: url('../img/bank-tree.jpeg');
   background-position: 0 -50px;
@@ -100,38 +139,9 @@ body {
   font-size: 0.9rem;
 }
 
-@media (min-width: 920px) {
-  .hero {
-    height: 400px;
-    background-position: 0% 33%;
-  }
-
-  .hero-content {
-    position: absolute;
-    top: 50px;
-    right: 50px;
-    width: 300px;
-    margin: 2rem;
-  }
-
-  .hero-content .subtitle {
-    font-size: 1.5rem;
-  }
-
-  .hero-content .text {
-    font-size: 1.2rem;
-  }
-}
-
 .features {
   display: flex;
   flex-direction: column;
-}
-
-@media (min-width: 920px) {
-  .features {
-    flex-direction: row;
-  }
 }
 
 .feature-icon {
@@ -294,6 +304,33 @@ body {
   margin-right: 5px;
 }
 
+@media (min-width: 920px) {
+  .hero {
+    height: 400px;
+    background-position: 0% 33%;
+  }
+
+  .hero-content {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 300px;
+    margin: 2rem;
+  }
+
+  .hero-content .subtitle {
+    font-size: 1.5rem;
+  }
+
+  .hero-content .text {
+    font-size: 1.2rem;
+  }
+
+  .features {
+    flex-direction: row;
+  }
+}
+
 @media (min-width: 720px) {
   .account {
     flex-direction: row;
@@ -305,5 +342,8 @@ body {
 
   .transaction-button {
     width: 200px;
+  }
+  main.main {
+    padding: 4rem 2rem; /* Un peu plus d'espace sur desktop */
   }
 }
