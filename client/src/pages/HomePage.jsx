@@ -1,13 +1,10 @@
 import React from 'react'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import Layout from '../layout/Layout'
 
 const HomePage = () => {
   return (
-    <>
-      <Header />
-      <main className="main">
-        <div className="hero">
+    <Layout>
+      <div className="hero">
           <section className="hero-content">
             <h2 className="sr-only">Promoted Content</h2>
             <p className="subtitle">No fees.</p>
@@ -59,9 +56,7 @@ const HomePage = () => {
             </p>
           </div>
         </section>
-      </main>
-      <Footer />
-    </>
+    </Layout>
   )
 }
 
