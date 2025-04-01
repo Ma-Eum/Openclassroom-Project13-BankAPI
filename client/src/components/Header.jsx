@@ -1,13 +1,13 @@
-// src/components/Header.jsx
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../redux/userSlice'
+import { Link, useNavigate } from 'react-router-dom'
 
-function Header() {
+const Header = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { isAuthenticated, userInfo } = useSelector((state) => state.user)
+  const isAuthenticated = useSelector((state) => state.user.isAuthenticated)
+  const userInfo = useSelector((state) => state.user.userInfo)
 
   const handleLogout = () => {
     dispatch(logout())
@@ -26,20 +26,21 @@ function Header() {
       </Link>
 
       <div>
-      {isAuthenticated ? (
-        <>
-          <Link className="main-nav-item" to="/profile">
-            <i className="fa fa-user-circle"></i> {userInfo?.firstName}
+        {isAuthenticated ? (
+          <>
+            <Link className="main-nav-item" to="/profile">
+              <i className="fa fa-user-circle"></i>
+              {userInfo?.firstName || 'Profil'}
+            </Link>
+            <button className="main-nav-item" onClick={handleLogout}>
+              <i className="fa fa-sign-out"></i> Sign Out
+            </button>
+          </>
+        ) : (
+          <Link className="main-nav-item" to="/login">
+            <i className="fa fa-user-circle"></i> Sign In
           </Link>
-          <a href="#" className="main-nav-item" onClick={(e) => { e.preventDefault(); handleLogout(); }}>
-            <i className="fa fa-sign-out"></i> Sign Out
-          </a>
-        </>
-      ) : (
-        <Link className="main-nav-item" to="/login">
-          <i className="fa fa-user-circle"></i> Sign In
-        </Link>
-      )}
+        )}
       </div>
     </nav>
   )
