@@ -1,12 +1,13 @@
 import React from 'react'
+import Layout from '../layout/Layout'
 import UserInfoEditor from '../components/UserInfoEditor'
 
 /**
  * Page Profil : affichage du nom de l'utilisateur + comptes bancaires mockés
  */
-function ProfilePage() {
+const ProfilePage = () => {
   return (
-    <>
+    <Layout>
       <main className="main bg-dark">
         <UserInfoEditor />
 
@@ -46,7 +47,7 @@ function ProfilePage() {
           </div>
         </section>
       </main>
-    </>
+    </Layout>
   )
 }
 

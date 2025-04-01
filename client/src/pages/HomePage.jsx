@@ -21,7 +21,7 @@ const HomePage = () => {
 
           <div className="feature-item">
             <img
-              src="./designs/img/icon-chat.png"
+              src="img/icon-chat.png"
               alt="Chat Icon"
               className="feature-icon"
             />
@@ -34,7 +34,7 @@ const HomePage = () => {
 
           <div className="feature-item">
             <img
-              src="./designs/img/icon-money.png"
+              src="img/icon-money.png"
               alt="Money Icon"
               className="feature-icon"
             />
@@ -46,7 +46,7 @@ const HomePage = () => {
 
           <div className="feature-item">
             <img
-              src="./designs/img/icon-security.png"
+              src="img/icon-security.png"
               alt="Security Icon"
               className="feature-icon"
             />
