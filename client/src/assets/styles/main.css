@@ -274,6 +274,13 @@ main.main {
   margin-bottom: 2rem;
 }
 
+.header .edit-button {
+  width: auto;
+  padding: 10px 20px;
+  margin-top: 1rem;
+  display: inline-block;
+}
+
 .transaction-button {
   display: block;
   width: 100%;
@@ -345,5 +352,18 @@ main.main {
   }
   main.main {
     padding: 4rem 2rem; /* Un peu plus d'espace sur desktop */
+  }
+  .edit-form {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .edit-form input {
+    font-size: 1rem;
+  }
+
+  .edit-button {
+    width: 100%;
+    margin-bottom: 1rem;
   }
 }
