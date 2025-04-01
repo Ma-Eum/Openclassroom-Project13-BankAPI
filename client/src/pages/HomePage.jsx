@@ -1,50 +1,62 @@
 import React from 'react'
-import iconChat from '../assets/img/icon-chat.png'
-import iconMoney from '../assets/img/icon-money.png'
-import iconSecurity from '../assets/img/icon-security.png'
 
 const HomePage = () => {
   return (
-    <div>
-      <div className="hero">
-        <section className="hero-content">
-          <h2 className="sr-only">Promoted Content</h2>
+    <>
+      <section className="hero" aria-label="Promotional content">
+        <div className="hero-content">
+          <h1 className="sr-only">Promotions</h1>
           <p className="subtitle">No fees.</p>
           <p className="subtitle">No minimum deposit.</p>
           <p className="subtitle">High interest rates.</p>
           <p className="text">
             Open a savings account with Argent Bank today!
           </p>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      <section className="features">
-        <h2 className="sr-only">Features</h2>
-        <div className="feature-item">
-          <img src={iconChat} alt="Chat Icon" className="feature-icon" />
+      <section className="features" aria-labelledby="features-title">
+        <h2 id="features-title" className="sr-only">Our Features</h2>
+
+        <article className="feature-item">
+          <img
+            src="src/assets/img/icon-chat.png"
+            alt="Chat with support"
+            className="feature-icon"
+          />
           <h3 className="feature-item-title">You are our #1 priority</h3>
           <p>
             Need to talk to a representative? You can get in touch through our
             24/7 chat or through a phone call in less than 5 minutes.
           </p>
-        </div>
-        <div className="feature-item">
-          <img src={iconMoney} alt="Money Icon" className="feature-icon" />
+        </article>
+
+        <article className="feature-item">
+          <img
+            src="src/assets/img/icon-money.png"
+            alt="Financial growth icon"
+            className="feature-icon"
+          />
           <h3 className="feature-item-title">More savings means higher rates</h3>
           <p>
             The more you save with us, the higher your interest rate will be!
           </p>
-        </div>
-        <div className="feature-item">
-          <img src={iconSecurity} alt="Security Icon" className="feature-icon" />
+        </article>
+
+        <article className="feature-item">
+          <img
+            src="src/assets/img/icon-security.png"
+            alt="Security shield icon"
+            className="feature-icon"
+          />
           <h3 className="feature-item-title">Security you can trust</h3>
           <p>
             We use top of the line encryption to make sure your data and money
             is always safe.
           </p>
-        </div>
+        </article>
       </section>
-    </div>
+    </>
   )
 }
 
