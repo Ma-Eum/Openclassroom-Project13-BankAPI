@@ -1,0 +1,185 @@
+
+swagger: "2.0"
+info:
+  title: "Argent Bank - Transactions API"
+  description: "Proposed API specification for Phase 2: Transactions"
+  version: "1.0.0"
+host: "localhost:3001"
+basePath: "/api/v1"
+schemes:
+  - http
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+paths:
+  /transactions:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Get all transactions for current month
+      description: Returns a list of transactions grouped by account
+      parameters:
+        - name: accountId
+          in: query
+          type: string
+          required: false
+          description: Optional account ID to filter transactions
+      responses:
+        "200":
+          description: List of transactions
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Transaction"
+        "401":
+          description: Unauthorized
+        "500":
+          description: Server error
+    post:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Create a new transaction
+      description: Add a new transaction to the database
+      parameters:
+        - in: body
+          name: transaction
+          required: true
+          schema:
+            $ref: "#/definitions/NewTransaction"
+      responses:
+        "201":
+          description: Transaction created
+        "400":
+          description: Invalid input
+        "401":
+          description: Unauthorized
+        "500":
+          description: Server error
+
+  /transactions/{id}:
+    get:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Get a specific transaction
+      description: Returns transaction details for a given ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Transaction found
+          schema:
+            $ref: "#/definitions/Transaction"
+        "404":
+          description: Transaction not found
+        "401":
+          description: Unauthorized
+    put:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Update transaction description
+      description: Modify only the description (notes) of an existing transaction
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+        - in: body
+          name: description
+          required: true
+          schema:
+            $ref: "#/definitions/TransactionDescriptionUpdate"
+      responses:
+        "200":
+          description: Transaction updated
+        "400":
+          description: Invalid input
+        "404":
+          description: Transaction not found
+        "401":
+          description: Unauthorized
+    delete:
+      security:
+        - Bearer: []
+      tags:
+        - Transactions
+      summary: Delete a transaction
+      description: Remove a transaction by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      responses:
+        "204":
+          description: Transaction deleted
+        "404":
+          description: Transaction not found
+        "401":
+          description: Unauthorized
+
+definitions:
+  Transaction:
+    type: object
+    properties:
+      id:
+        type: string
+      accountId:
+        type: string
+      date:
+        type: string
+        format: date
+      amount:
+        type: number
+        format: float
+      type:
+        type: string
+        enum:
+          - debit
+          - credit
+      description:
+        type: string
+
+  NewTransaction:
+    type: object
+    required:
+      - accountId
+      - date
+      - amount
+      - type
+    properties:
+      accountId:
+        type: string
+      date:
+        type: string
+        format: date
+      amount:
+        type: number
+        format: float
+      type:
+        type: string
+        enum:
+          - debit
+          - credit
+      description:
+        type: string
+
+  TransactionDescriptionUpdate:
+    type: object
+    required:
+      - description
+    properties:
+      description:
+        type: string
