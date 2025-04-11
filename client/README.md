@@ -1,26 +1,80 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 💼 Argent Bank - Frontend React
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+> Interface client web développée avec **React, Redux et Vite**, permettant à un utilisateur de banque de consulter et modifier ses informations personnelles.
 
 ---
 
-## 🔍 Documentation API – Phase 2 : Transactions
+## 🚀 Stack technique
 
-Le fichier Swagger `swagger_transactions.yaml` est disponible à cette adresse :
+- ⚛️ **React 18** (via Vite)
+- 🧠 **Redux Toolkit** (gestion du state)
+- 🔐 **JWT Authentification**
+- 💅 **CSS custom** (fichier `main.css`)
+- 🌐 **API REST** fournie (phase 1) + spec Swagger (phase 2)
 
-📄 [Voir la spécification Swagger des transactions](./public/swagger/swagger_transactions.yaml)
+---
 
-Tu peux aussi l'ouvrir dans l’éditeur Swagger officiel :
-🌐 https://editor.swagger.io
+## ▶️ Démarrage local du projet
 
-> File > Import File > Sélectionner `swagger_transactions.yaml` pour explorer tous les endpoints disponibles.
+```bash
+# Installation des dépendances
+npm install
 
+# Démarrage du serveur de développement
+npm run dev
+```
+
+> L'application sera accessible sur `http://localhost:5173`
+
+---
+
+## ✅ Fonctionnalités implémentées
+
+- Formulaire de connexion sécurisé
+- Authentification via JWT + token persisté (localStorage)
+- Page profil protégée (`/profile`)
+- Modification du prénom / nom utilisateur
+- Affichage dynamique de comptes mockés
+- Routing sécurisé avec `PrivateRoute`
+- Design responsive respectant la maquette fournie
+
+---
+
+## 📁 Arborescence projet
+
+```
+client/
+├── assets/img/            # Images & icônes
+├── components/            # Composants UI réutilisables
+├── layout/                # Layout global (Header/Footer)
+├── mocks/                 # Données de test (comptes)
+├── pages/                 # HomePage, LoginPage, ProfilePage
+├── redux/                 # Redux: store & userSlice
+├── services/              # Appels API externalisés
+├── App.jsx                # Routing principal
+├── main.jsx               # Entrée React
+└── main.css               # Feuille de style globale
+```
+
+---
+
+## 🔍 Phase 2 – Documentation API (Transactions)
+
+📄 Spécification Swagger disponible ici :
+
+📁 [`/public/swagger/swagger_transactions.yaml`](./public/swagger/swagger_transactions.yaml)
+
+🌐 Pour l’ouvrir dans l’éditeur Swagger :
+
+> Accédez à [https://editor.swagger.io](https://editor.swagger.io),  
+> puis : `File > Import File` → sélectionnez `swagger_transactions.yaml`
+
+---
+
+## 👤 Auteur
+
+Projet réalisé dans le cadre de la formation **Développeur Front-End** chez **OpenClassrooms**.  
+Projet 13 – Argent Bank (authentification + spécification API)
+
+---
