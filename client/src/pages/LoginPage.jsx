@@ -3,6 +3,9 @@ import { useDispatch } from 'react-redux'
 import { loginSuccess, setUserInfo } from '../redux/userSlice'
 import { useNavigate } from 'react-router-dom'
 
+// 📦 Appels API externalisés
+import { loginUser, fetchUserProfile } from '../services/authService'
+
 const LoginPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -13,13 +16,8 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      // 🔐 1. Connexion
-      const response = await fetch('http://localhost:3001/api/v1/user/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      })
-      const data = await response.json()
+      // 🔐 1. Connexion de l'utilisateur (POST /user/login)
+      const data = await loginUser(email, password)
 
       if (data.status === 200) {
         const token = data.body.token
@@ -28,24 +26,17 @@ const LoginPage = () => {
         dispatch(loginSuccess({ token, userInfo: null }))
         localStorage.setItem('token', JSON.stringify(token))
 
-        // 🧠 3. Récupérer les infos utilisateur
-        const profileResponse = await fetch('http://localhost:3001/api/v1/user/profile', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        })
-        const profileData = await profileResponse.json()
+        // 🧠 3. Récupérer les infos utilisateur (POST /user/profile)
+        const profileData = await fetchUserProfile(token)
 
         if (profileData.status === 200) {
           const userInfo = profileData.body
 
-          // ✅ 4. Stocker infos utilisateur Redux + localStorage
+          // ✅ 4. Stocker infos utilisateur dans Redux + localStorage
           dispatch(setUserInfo(userInfo))
           localStorage.setItem('userInfo', JSON.stringify(userInfo))
 
-          // 🎯 5. Rediriger
+          // 🎯 5. Rediriger l'utilisateur vers le profil
           navigate('/profile')
         } else {
           setError('Impossible de récupérer le profil')

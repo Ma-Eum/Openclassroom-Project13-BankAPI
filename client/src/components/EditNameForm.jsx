@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUserInfo } from '../redux/userSlice'
 
+// 🔁 Import de l’appel API externe
+import { updateUserProfile } from '../services/authService'
+
 const EditNameForm = ({ onClose }) => {
   const dispatch = useDispatch()
   const token = useSelector((state) => state.user.token)
@@ -14,26 +17,19 @@ const EditNameForm = ({ onClose }) => {
   const handleSave = async (e) => {
     e.preventDefault()
     try {
-      const response = await fetch('http://localhost:3001/api/v1/user/profile', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ firstName, lastName }),
-      })
+      // ✅ Utilisation de notre service API
+      const data = await updateUserProfile(token, firstName, lastName)
 
-      const data = await response.json()
       if (data.status === 200) {
-        dispatch(setUserInfo(data.body))
-        onClose() // ✅ Revenir au mode lecture
+        dispatch(setUserInfo(data.body)) // mise à jour Redux
+        onClose() // fermeture du formulaire
       } else {
         setError(data.message || 'Une erreur est survenue')
       }
     } catch (err) {
-        console.error('Erreur mise à jour du profil :', err)
-        setError('Échec de la mise à jour. Veuillez réessayer.')
-      }      
+      console.error('Erreur mise à jour du profil :', err)
+      setError('Échec de la mise à jour. Veuillez réessayer.')
+    }
   }
 
   return (

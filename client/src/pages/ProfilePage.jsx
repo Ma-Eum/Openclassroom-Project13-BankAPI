@@ -4,6 +4,9 @@ import { setUserInfo } from '../redux/userSlice'
 import accounts from '../mocks/mockAccounts'
 import AccountCard from '../components/AccountCard'
 
+// 📦 Appels API déplacés dans un service
+import { fetchUserProfile, updateUserProfile } from '../services/authService'
+
 const ProfilePage = () => {
   const dispatch = useDispatch()
   const token = useSelector((state) => state.user.token)
@@ -14,18 +17,11 @@ const ProfilePage = () => {
   const [lastNameInput, setLastNameInput] = useState('')
   const [error, setError] = useState(null)
 
+  // 📡 Charger le profil utilisateur si non chargé
   useEffect(() => {
-    const fetchUserInfo = async () => {
+    const fetchInfo = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/v1/user/profile', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        })
-
-        const data = await response.json()
+        const data = await fetchUserProfile(token)
         if (data.status === 200) {
           dispatch(setUserInfo(data.body))
         }
@@ -35,7 +31,7 @@ const ProfilePage = () => {
     }
 
     if (token && !userInfo) {
-      fetchUserInfo()
+      fetchInfo()
     }
   }, [token, userInfo, dispatch])
 
@@ -52,22 +48,10 @@ const ProfilePage = () => {
     setError(null)
   }
 
+  // 💾 Sauvegarder la mise à jour du nom/prénom
   const handleSave = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/v1/user/profile', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          firstName: firstNameInput,
-          lastName: lastNameInput,
-        }),
-      })
-
-      const data = await response.json()
-
+      const data = await updateUserProfile(token, firstNameInput, lastNameInput)
       if (data.status === 200) {
         dispatch(setUserInfo(data.body))
         setIsEditing(false)
