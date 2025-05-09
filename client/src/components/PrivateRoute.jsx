@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom'
 
 /**
  * Composant de route privée sécurisé.
- * Si l’utilisateur n’est pas connecté → redirection automatique vers /login
+ * Si l’utilisateur n’est pas connecté → redirection automatique vers la page d’accueil
  */
 const PrivateRoute = ({ children }) => {
   const token = useSelector((state) => state.user.token)
@@ -12,7 +12,7 @@ const PrivateRoute = ({ children }) => {
   const localToken = localStorage.getItem('token')
 
   if (!isAuthenticated && !token && !localToken) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/" replace />
   }
 
   return children
