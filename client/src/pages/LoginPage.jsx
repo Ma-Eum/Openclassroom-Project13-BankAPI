@@ -42,7 +42,8 @@ const LoginPage = () => {
           setError('Impossible de récupérer le profil')
         }
       } else {
-        setError(data.message || 'Identifiants incorrects')
+        // ❌ Message d'erreur personnalisé, plus clair
+        setError('Identifiants incorrects')
       }
     } catch {
       setError('Erreur lors de la connexion. Veuillez réessayer.')
