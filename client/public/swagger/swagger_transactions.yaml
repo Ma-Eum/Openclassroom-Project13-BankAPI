@@ -2,7 +2,7 @@
 swagger: "2.0"
 info:
   title: "Argent Bank - Transactions API"
-  description: "Proposed API specification for Phase 2: Transactions"
+  description: "Final Swagger proposal based on feedback and wireframe"
   version: "1.0.0"
 host: "localhost:3001"
 basePath: "/api/v1"
@@ -34,42 +34,20 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Transaction"
-        "401":
-          description: Unauthorized
-        "500":
-          description: Server error
-    post:
-      security:
-        - Bearer: []
-      tags:
-        - Transactions
-      summary: Create a new transaction
-      description: Add a new transaction to the database
-      parameters:
-        - in: body
-          name: transaction
-          required: true
-          schema:
-            $ref: "#/definitions/NewTransaction"
-      responses:
-        "201":
-          description: Transaction created
-        "400":
-          description: Invalid input
+              $ref: "#/definitions/TransactionSummary"
         "401":
           description: Unauthorized
         "500":
           description: Server error
 
-  /transactions/{id}:
+  /transaction/{id}:
     get:
       security:
         - Bearer: []
       tags:
         - Transactions
       summary: Get a specific transaction
-      description: Returns transaction details for a given ID
+      description: Returns transaction summary info (no editable fields)
       parameters:
         - name: id
           in: path
@@ -77,30 +55,31 @@ paths:
           type: string
       responses:
         "200":
-          description: Transaction found
+          description: Transaction summary
           schema:
-            $ref: "#/definitions/Transaction"
+            $ref: "#/definitions/TransactionSummary"
         "404":
           description: Transaction not found
         "401":
           description: Unauthorized
+
     put:
       security:
         - Bearer: []
       tags:
         - Transactions
-      summary: Update transaction description
-      description: Modify only the description (notes) of an existing transaction
+      summary: Update a transaction's category or notes
+      description: Allows modification of editable fields only, but must return full transaction model
       parameters:
         - name: id
           in: path
           required: true
           type: string
         - in: body
-          name: description
+          name: transaction
           required: true
           schema:
-            $ref: "#/definitions/TransactionDescriptionUpdate"
+            $ref: "#/definitions/Transaction"
       responses:
         "200":
           description: Transaction updated
@@ -110,76 +89,75 @@ paths:
           description: Transaction not found
         "401":
           description: Unauthorized
-    delete:
-      security:
-        - Bearer: []
-      tags:
-        - Transactions
-      summary: Delete a transaction
-      description: Remove a transaction by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          type: string
-      responses:
-        "204":
-          description: Transaction deleted
-        "404":
-          description: Transaction not found
-        "401":
-          description: Unauthorized
 
 definitions:
+  TransactionSummary:
+    type: object
+    properties:
+      id:
+        type: string
+        example: "txn_123456789"
+      accountId:
+        type: string
+        example: "acc_987654321"
+      date:
+        type: string
+        format: date
+        example: "2020-06-20"
+      description:
+        type: string
+        example: "Golden Sun Bakery"
+      amount:
+        type: number
+        format: float
+        example: 50.0
+      balance:
+        type: number
+        format: float
+        example: 2187.79
+
   Transaction:
     type: object
     properties:
       id:
         type: string
+        example: "txn_123456789"
       accountId:
         type: string
+        example: "acc_987654321"
       date:
         type: string
         format: date
+        example: "2020-06-20"
+      description:
+        type: string
+        example: "Golden Sun Bakery"
       amount:
         type: number
         format: float
-      type:
-        type: string
-        enum:
-          - debit
-          - credit
-      description:
-        type: string
-
-  NewTransaction:
-    type: object
-    required:
-      - accountId
-      - date
-      - amount
-      - type
-    properties:
-      accountId:
-        type: string
-      date:
-        type: string
-        format: date
-      amount:
+        example: 50.0
+      balance:
         type: number
         format: float
-      type:
+        example: 2187.79
+      transactionType:
         type: string
         enum:
-          - debit
-          - credit
-      description:
+          - Electronic
+          - Wire
+          - Check
+        example: "Electronic"
+      category:
         type: string
-
-  TransactionDescriptionUpdate:
-    type: object
-    required:
-      - description
-    properties:
-      description:
+        enum:
+          - Food
+          - Transport
+          - Health
+          - Shopping
+          - Utilities
+          - Rent
+          - Travel
+        example: "Food"
+      notes:
         type: string
+        example: "Lunch with client"
