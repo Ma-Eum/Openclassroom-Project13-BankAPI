@@ -47,7 +47,7 @@ paths:
       tags:
         - Transactions
       summary: Get a specific transaction
-      description: Returns transaction summary info (no editable fields)
+      description: Returns full transaction detail
       parameters:
         - name: id
           in: path
@@ -55,9 +55,9 @@ paths:
           type: string
       responses:
         "200":
-          description: Transaction summary
+          description: Transaction details
           schema:
-            $ref: "#/definitions/TransactionSummary"
+            $ref: "#/definitions/Transaction"
         "404":
           description: Transaction not found
         "401":
@@ -69,7 +69,7 @@ paths:
       tags:
         - Transactions
       summary: Update a transaction's category or notes
-      description: Allows modification of editable fields only, but must return full transaction model
+      description: Allows modification of editable fields only (category, notes)
       parameters:
         - name: id
           in: path
@@ -79,7 +79,7 @@ paths:
           name: transaction
           required: true
           schema:
-            $ref: "#/definitions/Transaction"
+            $ref: "#/definitions/TransactionUpdate"
       responses:
         "200":
           description: Transaction updated
@@ -94,12 +94,6 @@ definitions:
   TransactionSummary:
     type: object
     properties:
-      id:
-        type: string
-        example: "txn_123456789"
-      accountId:
-        type: string
-        example: "acc_987654321"
       date:
         type: string
         format: date
@@ -110,7 +104,7 @@ definitions:
       amount:
         type: number
         format: float
-        example: 50.0
+        example: 50.00
       balance:
         type: number
         format: float
@@ -135,28 +129,43 @@ definitions:
       amount:
         type: number
         format: float
-        example: 50.0
+        example: 50.00
+      balance:
+        type: number
+        format: float
+        example: 2187.79
+
+  TransactionUpdate:
+    type: object
+    properties:
+      id:
+        type: string
+        example: "txn_123456789"
+      accountId:
+        type: string
+        example: "acc_987654321"
+      date:
+        type: string
+        format: date
+        example: "2020-06-20"
+      description:
+        type: string
+        example: "Golden Sun Bakery"
+      amount:
+        type: number
+        format: float
+        example: 50.00
       balance:
         type: number
         format: float
         example: 2187.79
       transactionType:
         type: string
-        enum:
-          - Electronic
-          - Wire
-          - Check
+        enum: [Electronic, Wire, Check]
         example: "Electronic"
       category:
         type: string
-        enum:
-          - Food
-          - Transport
-          - Health
-          - Shopping
-          - Utilities
-          - Rent
-          - Travel
+        enum: [Food, Transport, Health, Shopping, Utilities, Rent, Travel]
         example: "Food"
       notes:
         type: string
