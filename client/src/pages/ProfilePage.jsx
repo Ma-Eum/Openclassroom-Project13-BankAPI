@@ -84,7 +84,7 @@ const ProfilePage = () => {
           </>
         ) : (
           <form
-            className="edit-form"
+            className="edit-form account"
             onSubmit={(e) => {
               e.preventDefault()
               handleSave()
@@ -92,7 +92,8 @@ const ProfilePage = () => {
             aria-labelledby="edit-title"
           >
             <h2 id="edit-title">Edit your name</h2>
-            <div className="input-wrapper">
+            <div className="edit-name-fields">
+              <div className="input-wrapper">
               <label htmlFor="first-name">First Name</label>
               <input
                 id="first-name"
@@ -101,8 +102,8 @@ const ProfilePage = () => {
                 onChange={(e) => setFirstNameInput(e.target.value)}
                 required
               />
-            </div>
-            <div className="input-wrapper">
+              </div>
+              <div className="input-wrapper">
               <label htmlFor="last-name">Last Name</label>
               <input
                 id="last-name"
@@ -111,7 +112,9 @@ const ProfilePage = () => {
                 onChange={(e) => setLastNameInput(e.target.value)}
                 required
               />
+              </div>
             </div>
+            
             {error && (
               <p role="alert" aria-live="assertive" style={{ color: 'red' }}>
                 {error}
